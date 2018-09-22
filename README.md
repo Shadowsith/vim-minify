@@ -1,22 +1,20 @@
-# Vim-minify
+# vim-minify
 
 A small vim plugin to minify your javascript and css code directly and fast in vim.
 
 ## Features
-* Minifies whole javascript and css files
+* Minifying complete css or javascript files or line-based minifying
 * functions occurs only in JavaScript, CSS, HTML and PHP files
-* complete and line based minifying
 * secure (no thridparty web service or software needed)
 
 ## Usage
-
 In javascript or css files: (implemented)
 * <code>:MinifyJS</code> minifies your javascript code
 * <code>:MinifyCSS</code> minifies your css code
 
 In html or php files: (comming soon)
-* <code>1,5minjs</code> minifies embedded javascript code
-* <code>1,5mincss</code> minifies embedded css code
+* <code>:1,5minjs</code> minifies embedded javascript code (line 1 to 5)
+* <code>:1,5mincss</code> minifies embedded css code (line 1 to 5)
 
 ## Installation
 E.g. install plugin with vim-plug:
@@ -32,3 +30,13 @@ which are used to minifying the code. For such code use the line based minifier 
 minify the rest by your own.
 
 ## Examples
+
+### Javascript
+<img src="https://shadowsith.de/github/vim-minify/vim-js-minify.gif">
+
+### CSS
+<img src="https://shadowsith.de/github/vim-minify/vim-css-minify.gif">
+
+
+## See also
+* [XML-fast.vim](https://github.com/joeky888/XML-fast.vim), vim-xml-minifier
