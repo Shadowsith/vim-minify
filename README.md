@@ -32,10 +32,10 @@ minify the rest by your own.
 ## Examples
 
 ### Javascript
-<img src="https://shadowsith.de/github/vim-minify/vim-js-minify.gif">
+<img src="https://shadowsith.de/github/vim-minify/vim_js_minify.gif">
 
 ### CSS
-<img src="https://shadowsith.de/github/vim-minify/vim-css-minify.gif">
+<img src="https://shadowsith.de/github/vim-minify/vim_css_minify.gif">
 
 
 ## See also
