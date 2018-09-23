@@ -8,7 +8,7 @@ endif
 
 if $ft == "css"
     command! -buffer MinifyCSS call mincss#Minify()
-    command! -buffer UnMinifyCSS call mincss#UnMinify()
+    command! -buffer UnMinifyCSS call mincss#UnMinifyCSS()
     command! -buffer Mincss call mincss#LineMinify(<line1>,<line2>)
 endif
 
