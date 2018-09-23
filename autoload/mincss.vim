@@ -14,3 +14,7 @@ function mincss#Minify()
     endfor
     call setline('.',l:line)
 endfunction
+
+function mincss#LineMinify(lnum1,lnum2)
+    echo a:lnum1 . " " . a:lnum2
+endfunction

@@ -13,8 +13,8 @@ In javascript or css files: (implemented)
 * <code>:MinifyCSS</code> minifies your css code
 
 In html or php files: (comming soon)
-* <code>:1,5minjs</code> minifies embedded javascript code (line 1 to 5)
-* <code>:1,5mincss</code> minifies embedded css code (line 1 to 5)
+* <code>:1,5Minjs</code> minifies embedded javascript code (line 1 to 5)
+* <code>:1,5Mincss</code> minifies embedded css code (line 1 to 5)
 
 ## Installation
 E.g. install plugin with vim-plug:
