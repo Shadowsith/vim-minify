@@ -11,12 +11,12 @@ A small vim plugin to (un)minify your javascript and css code directly and fast 
 
 ## Usage
 ### In JavaScript files
-* <code>:MinifyJS</code> minifies your javascript code
-* <code>:UnMinifyJS</code> reformat to be human readable
+* <code>:MinifyJS</code> minifies your javascript code to filename.min.js
+* <code>:UnMinifyJS</code> reformat to be human readable 
 
 
 ### In CSS files
-* <code>:MinifyCSS</code> minifies your css code
+* <code>:MinifyCSS</code> minifies your css code to filename.min.css
 * <code>:UnMinifyCSS</code> reformat to be human readable
 
 ### In JavaScript, CSS, HTML and PHP files
@@ -30,13 +30,15 @@ E.g. install plugin with vim-plug:
 
 Or put it in your .vim/bundle folder if you are using pathogen or vundle
 
+## Future planed
+* lined based unminifier
+* optional parameter where vim saves the minified file
+
 ## Knowing Issues
-Unfortunally the minifier makes on this developmenti state no difference between
+Unfortunally the minifier makes on this development state no difference between
 strings and code in javascript files. Please be careful if you have keywords,
 which are used to minifying the code. For such code use the line based minifier and
 minify the rest by your own.
-
-As alternative you can use the build-in 'minif'
 
 ## Examples
 
