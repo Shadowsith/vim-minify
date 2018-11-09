@@ -4,6 +4,8 @@ A small vim plugin to (un)minify your javascript and css code directly and fast 
 
 ## Features
 * Minifying complete css or javascript files or line-based minifying
+* writes a file.min.extension file in the directory of the file (e.g. site.min.js in
+  folder where site.js is)
 * functions occurs only in JavaScript, CSS, HTML and PHP files
 * secure (no thridparty web service or software needed)
 

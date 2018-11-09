@@ -1,4 +1,6 @@
 function minjs#Minify()
+    let l:min_file = expand('%:r') . '.min.' . expand('%:e') 
+
     silent! %s/\n//g
     silent! %s/\r//g
 
@@ -13,6 +15,11 @@ function minjs#Minify()
         let l:line = substitute(l:line, after, k, 'g')
     endfor
     call setline('.',l:line)
+
+    let l:cmd = 'write! ' . l:min_file 
+    execute l:cmd
+    undo
+
 endfunction
 
 function minjs#LineMinify(lnum1,lnum2)
