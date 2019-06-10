@@ -43,22 +43,10 @@ function minjs#SetLines(res)
     call setline(s:lnum1, l:buffer)
 endfunction
 
-
 function minjs#UnMinify()
     silent! %s/{\ze[^\r\n]/{\r/g
     silent! %s/){/) {/g
     silent! %s/};\?\ze[^\r\n]/\0\r/g
     silent! %s/;\ze[^\r\n]/;\r/g
     silent! normal ggVG=
-endfunction
-
-function minjs#LineUnMinfy(lnum1, lnum2)
-    let l:subs = [] 
-    call add(l:subs, a:lnum1 . ',' a:lnum2 . 's/{\ze[^\r\n]/{\r/g')
-    call add(l:subs, a:lnum1 . ',' a:lnum2 . 's/){/) {/g')
-    call add(l:subs, a:lnum1 . ',' a:lnum2 . 's/};\?\ze[^\r\n]/\0\r/g')
-    call add(l:subs, a:lnum1 . ',' a:lnum2 . 's/;\ze[^\r\n]/;\r/g')
-    for l:cmd in l:subs
-        silent! execute l:cmd
-    endfor
 endfunction

@@ -46,7 +46,3 @@ function mincss#UnMinifyCSS()
     %s/[{;}]/&\r/g|norm! =gg
     %s/}/\r}\r/g|norm! =gg
 endfunction
-
-function mincss#LineUnMinifyCSS(lnum1, lnum2)
-    let l:cmd0 = a:lnum1 . ',' . a:lnum2 . '' 
-endfunction

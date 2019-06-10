@@ -36,10 +36,6 @@ E.g. install plugin with vim-plug:
 
 Or put it in your .vim/bundle folder if you are using pathogen or vundle
 
-## Future planned
-* lined based unminifier
-* optional parameter where vim saves the minified file
-
 ## Examples
 
 ### Javascript
