@@ -1,9 +1,9 @@
 function mincss#Done(file)
-    echo a:file . " written!"
+    echo s:min_file . " written!"
 endfunction
 
 function mincss#Minify()
-    let l:min_file = expand('%:r') . '.min.' . expand('%:e') 
+    let s:min_file = expand('%:r') . '.min.' . expand('%:e') 
 
     silent! %s/\n//g
     silent! %s/\r//g
@@ -11,9 +11,8 @@ function mincss#Minify()
 
     let l:line = getline('.')
     let l:curl = "curl -X POST --data-urlencode 'input=" . l:line .
-                \"' https://cssminifier.com/raw > " . l:min_file
-    let s:file = l:min_file
-    call job_start(["/bin/bash", "-c", l:curl], {'close_cb': 'mincss#Done', 'out_io': 'buffer', 'out_name': 'mybuffer'})
+                \"' https://cssminifier.com/raw > " . s:min_file
+    call job_start(["/bin/bash", "-c", l:curl], {'close_cb': 'mincss#Done', 'out_io': 'null'})
     undo
 endfunction
 
