@@ -12,11 +12,12 @@ function mincss#Minify()
     let l:line = getline('.')
     let l:curl = "curl -X POST --data-urlencode 'input=" . l:line .
                 \"' https://cssminifier.com/raw > " . s:min_file
-    call job_start(["/bin/bash", "-c", l:curl], {'close_cb': 'mincss#Done', 'out_io': 'null'})
+    call job_start(["/bin/bash", "-c", l:curl],
+                \{'close_cb': 'mincss#Done', 'out_io': 'null'})
     undo
 endfunction
 
-function mincss#LineMinify(lnum1,lnum2)
+function mincss#LineMinify(lnum1, lnum2)
     let l:subs = []
     call add(l:subs, a:lnum1 . ',' . a:lnum2 . 's/\n//g')
     call add(l:subs, a:lnum1 . ',' . a:lnum2 . 's/\r//g')
@@ -29,10 +30,10 @@ function mincss#LineMinify(lnum1,lnum2)
     let s:lnum1 = a:lnum1
     let l:curl = "curl -s -X POST --data-urlencode 'input=" . l:line .
                 \"' https://cssminifier.com/raw"
-    "let l:minline = system(l:curl)
 
-    call job_start(["/bin/bash", "-c", l:curl], {'close_cb': 'mincss#SetLines', 'out_io': 'buffer', 'out_name': 'mincss_buffer', 'out_msg': 0})
-    "call setline(a:lnum1, l:minline)
+    call job_start(["/bin/bash", "-c", l:curl],
+                \{'close_cb': 'mincss#SetLines', 'out_io': 'buffer',
+                \'out_name': 'mincss_buffer', 'out_msg': 0})
 endfunction
 
 function mincss#SetLines(res)

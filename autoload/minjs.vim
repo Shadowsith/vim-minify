@@ -13,11 +13,12 @@ function minjs#Minify()
     let l:line = getline('.')
     let l:curl = "curl -X POST --data-urlencode input='" . l:line .
                 \"' https://javascript-minifier.com/raw > " . s:min_file
-    call job_start(["/bin/bash", "-c", l:curl], {'close_cb': 'minjs#Done', 'out_io': 'null'})
+    call job_start(["/bin/bash", "-c", l:curl],
+                \{'close_cb': 'minjs#Done', 'out_io': 'null'})
     undo
 endfunction
 
-function minjs#LineMinify(lnum1,lnum2)
+function minjs#LineMinify(lnum1, lnum2)
     let l:subs = []
     call add(l:subs, a:lnum1 . ',' . a:lnum2 . 's/\/\/.*//g')
     call add(l:subs, a:lnum1 . ',' . a:lnum2 . 's/\n//g')
@@ -31,7 +32,9 @@ function minjs#LineMinify(lnum1,lnum2)
     let s:lnum1 = a:lnum1
     let l:curl = "curl -s -X POST --data-urlencode 'input=" . l:line .
                 \"' https://javascript-minifier.com/raw"
-    call job_start(["/bin/bash", "-c", l:curl], {'close_cb': 'minjs#SetLines', 'out_io': 'buffer', 'out_name': 'minjs_buffer', 'out_msg': 0})
+    call job_start(["/bin/bash", "-c", l:curl],
+                \{'close_cb': 'minjs#SetLines', 'out_io': 'buffer', 
+                \'out_name': 'minjs_buffer', 'out_msg': 0})
 endfunction
 
 function minjs#SetLines(res)
