@@ -18,28 +18,25 @@ function minjs#Minify()
 endfunction
 
 function minjs#LineMinify(lnum1,lnum2)
-    let l:cmd0 = a:lnum1 . ',' . a:lnum2 . 's/\/\/.*//g'
-    let l:cmd1 = a:lnum1 . ',' . a:lnum2 . 's/\n//g'
-    let l:cmd2 = a:lnum1 . ',' . a:lnum2 . 's/\r//g'
-    let l:cmd3 = a:lnum1 . ',' . a:lnum2 . "s/'/\"/g"
-    silent! execute l:cmd0
-    silent! execute l:cmd1
-    silent! execute l:cmd2
-    silent! execute l:cmd3
+    let l:subs = []
+    call add(l:subs, a:lnum1 . ',' . a:lnum2 . 's/\/\/.*//g')
+    call add(l:subs, a:lnum1 . ',' . a:lnum2 . 's/\n//g')
+    call add(l:subs, a:lnum1 . ',' . a:lnum2 . 's/\r//g')
+    call add(l:subs, a:lnum1 . ',' . a:lnum2 . "s/'/\"/g")
+    for l:cmd in l:subs
+        silent! execute l:cmd
+    endfor
 
     let l:line = getline(a:lnum1) 
     let s:lnum1 = a:lnum1
     let l:curl = "curl -s -X POST --data-urlencode 'input=" . l:line .
                 \"' https://javascript-minifier.com/raw"
-    call job_start(["/bin/bash", "-c", l:curl], {'close_cb': 'minjs#SetLines', 'out_io': 'buffer', 'out_name': 'linebuffer', 'out_msg': 0})
+    call job_start(["/bin/bash", "-c", l:curl], {'close_cb': 'minjs#SetLines', 'out_io': 'buffer', 'out_name': 'minjs_buffer', 'out_msg': 0})
 endfunction
 
 function minjs#SetLines(res)
-    "if(getbufline(bufnr('linebuffer'), 2)[0] != "")
-    "    call deletebufline(bufnr('linebuffer'), 1)
-    "endif
-    let l:buffer = getbufline(bufnr('linebuffer'), 1)
-    call deletebufline(bufnr('linebuffer'), 1)
+    let l:buffer = getbufline(bufnr('minjs_buffer'), 1)[0]
+    call deletebufline(bufnr('minjs_buffer'), 1)
     call setline(s:lnum1, l:buffer)
 endfunction
 
@@ -50,4 +47,15 @@ function minjs#UnMinify()
     silent! %s/};\?\ze[^\r\n]/\0\r/g
     silent! %s/;\ze[^\r\n]/;\r/g
     silent! normal ggVG=
+endfunction
+
+function minjs#LineUnMinfy(lnum1, lnum2)
+    let l:subs = [] 
+    call add(l:subs, a:lnum1 . ',' a:lnum2 . 's/{\ze[^\r\n]/{\r/g')
+    call add(l:subs, a:lnum1 . ',' a:lnum2 . 's/){/) {/g')
+    call add(l:subs, a:lnum1 . ',' a:lnum2 . 's/};\?\ze[^\r\n]/\0\r/g')
+    call add(l:subs, a:lnum1 . ',' a:lnum2 . 's/;\ze[^\r\n]/;\r/g')
+    for l:cmd in l:subs
+        silent! execute l:cmd
+    endfor
 endfunction
