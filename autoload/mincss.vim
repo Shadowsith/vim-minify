@@ -1,5 +1,6 @@
-let s:keywords = [';',',',':','{','}','(',')','[',']','=','+','-','\*','\/',
-                    \'<','>','<=','>=','&','|','!']
+function mincss#Done(file)
+    echo a:file . " written!"
+endfunction
 
 function mincss#Minify()
     let l:min_file = expand('%:r') . '.min.' . expand('%:e') 
@@ -11,8 +12,8 @@ function mincss#Minify()
     let l:line = getline('.')
     let l:curl = "curl -X POST --data-urlencode 'input=" . l:line .
                 \"' https://cssminifier.com/raw > " . l:min_file
-    call system(l:curl)
-    echo l:min_file . " written!"
+    let s:file = l:min_file
+    call job_start(["/bin/bash", "-c", l:curl], {'close_cb': 'mincss#Done', 'out_io': 'buffer', 'out_name': 'mybuffer'})
     undo
 endfunction
 
@@ -25,10 +26,21 @@ function mincss#LineMinify(lnum1,lnum2)
     silent! execute l:cmd3
 
     let l:line = getline(a:lnum1) 
+    let s:lnum1 = a:lnum1
     let l:curl = "curl -s -X POST --data-urlencode 'input=" . l:line .
                 \"' https://cssminifier.com/raw"
-    let l:minline = system(l:curl)
-    call setline(a:lnum1, l:minline)
+    "let l:minline = system(l:curl)
+
+    call job_start(["/bin/bash", "-c", l:curl], {'close_cb': 'mincss#SetLines', 'out_io': 'buffer', 'out_name': 'linebuffer', 'out_msg': 0})
+    "call setline(a:lnum1, l:minline)
+endfunction
+
+function mincss#SetLines(res)
+    if(getbufline(bufnr('linebuffer'), 2)[0] != "")
+        call deletebufline(bufnr('linebuffer'), 1)
+    endif
+    let l:buffer = getbufline(bufnr('linebuffer'), 1)
+    call setline(s:lnum1, l:buffer)
 endfunction
 
 function mincss#UnMinifyCSS()
