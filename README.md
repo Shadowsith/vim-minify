@@ -1,11 +1,12 @@
 # vim-minify
 
-A small vim plugin to (un)minify your javascript and css code directly and fast in vim.
+A small vim plugin to (un)minify your javascript and css code directly and fast in vim and neovim.
 
 This plugin uses the API from [javascript-minifier.com](https://javascript-minifier.com)
 and [cssminifier.com](https://cssminifier.com/) by [Andrew Chilton](https://chilts.org/).
 
 ## Features
+* Support for noevim
 * Minifying complete css or javascript files or line-based minifying
 * writes a file.min.extension file in the directory of the file (e.g. site.min.js in
   folder where site.js is)

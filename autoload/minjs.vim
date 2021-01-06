@@ -4,7 +4,7 @@ endfunction
 
 
 function minjs#Minify()
-    let s:min_file = expand('%:r') . '.min.' . expand('%:e') 
+    let s:min_file = expand('%:r') . '.min.' . expand('%:e')
     silent! %s/\/\/.*//g
     silent! %s/\n//g
     silent! %s/\r//g
@@ -13,8 +13,13 @@ function minjs#Minify()
     let l:line = getline('.')
     let l:curl = "curl -X POST --data-urlencode input='" . l:line .
                 \"' https://javascript-minifier.com/raw > " . s:min_file
-    call job_start(["/bin/bash", "-c", l:curl],
-                \{'close_cb': 'minjs#Done', 'out_io': 'null'})
+    if has('nvim')
+        call jobstart(["/bin/bash", "-c", l:curl],
+                    \{'close_cb': 'minjs#Done', 'out_io': 'null'})
+    else
+        call job_start(["/bin/bash", "-c", l:curl],
+                    \{'close_cb': 'minjs#Done', 'out_io': 'null'})
+    endif
     undo
 endfunction
 
@@ -28,13 +33,20 @@ function minjs#LineMinify(lnum1, lnum2)
         silent! execute l:cmd
     endfor
 
-    let l:line = getline(a:lnum1) 
+    let l:line = getline(a:lnum1)
     let s:lnum1 = a:lnum1
     let l:curl = "curl -s -X POST --data-urlencode 'input=" . l:line .
                 \"' https://javascript-minifier.com/raw"
-    call job_start(["/bin/bash", "-c", l:curl],
-                \{'close_cb': 'minjs#SetLines', 'out_io': 'buffer', 
-                \'out_name': 'minjs_buffer', 'out_msg': 0})
+    if has('nvim')
+        call jobstart(["/bin/bash", "-c", l:curl],
+                    \{'close_cb': 'minjs#SetLines', 'out_io': 'buffer',
+                    \'out_name': 'minjs_buffer', 'out_msg': 0})
+    else
+        call job_start(["/bin/bash", "-c", l:curl],
+                    \{'close_cb': 'minjs#SetLines', 'out_io': 'buffer',
+                    \'out_name': 'minjs_buffer', 'out_msg': 0})
+
+    endif
 endfunction
 
 function minjs#SetLines(res)
